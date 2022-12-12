@@ -11,8 +11,8 @@ function namespace:reverse_bits(byte)
     return (self.rev_TABLE[(byte & 0xF) + 1] << 4) | self.rev_TABLE[(byte >> 4) + 1]
 end
 
-function namespace:reverse_byte(byte)
-    return (self:reverse_bits(byte & 0xFF) << 8) | self:reverse_bits(byte >> 8)
+function namespace:reverse_bytes(byte_byte)
+    return (self:reverse_bits(byte_byte & 0xFF) << 8) | self:reverse_bits(byte_byte >> 8)
 end
 -- ref is reflect
 function namespace:crc16_Parametric(package, polynomial, xorIn, xorOut, refIn, refOut)
@@ -32,7 +32,7 @@ function namespace:crc16_Parametric(package, polynomial, xorIn, xorOut, refIn, r
         end
     end
     if refOut then
-        crc = self:reverse_byte(crc)
+        crc = self:reverse_bytes(crc)
     end
     crc = crc ~ xorOut
     return string.format('%04X', crc)
@@ -70,7 +70,7 @@ function namespace:crc16_Parametric_explicit(package, polynomial, xorIn, xorOut,
         end
     end
     if refOut then
-        crc = self:reverse_byte(crc)
+        crc = self:reverse_bytes(crc)
     end
     crc = crc ~ xorOut
     print('----- end -----')
